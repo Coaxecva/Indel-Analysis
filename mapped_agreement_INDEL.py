@@ -26,15 +26,21 @@ def get_filepaths(directory):
 if __name__ == '__main__':
 
 	print ("###########################################################")
-	#init dictionaries:
+	#Stat:
 	
-	for line in open(sam_fn):
-	    if line[0] == "@":
-	        pass
-	    else:
-	        sl = line.split()
-	        cigar= sl[5]
-	        print(cigar[:3])
+	f = open(sys.argv[1])
+	while True:
+		read = f.readline()
+		if read == '':
+			break
+
+		for line in open(sam_fn):
+		    if line[0] == "@":
+		        pass
+		    else:
+		        sl = line.split()
+		        cigar= sl[5]
+		        print(cigar[:3], cigar[:3]=="23M")
 
 	print ("###########################################################")
 	
