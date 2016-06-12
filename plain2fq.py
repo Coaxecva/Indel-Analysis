@@ -27,25 +27,33 @@ def get_filepaths(directory):
 if __name__ == '__main__':
 
 	
-	for f in get_filepaths(sys.argv[1]):
-		if mimetypes.guess_type(f)[0] == 'text/plain':
-			#print(f)
-			init = open(f)
-			fpos = open(pos_path+f[:-4])
-			print ("Opening the file: " + f)
-			target = open(f[:-3]+"fa", 'w')
-			i = 0
-			while True:
-				i += 1
-				read = init.readline()
-				pos = fpos.readline()
-				if read == '':
-					break
-				target.write(">" + str(i) + "##" + pos.strip())
-				target.write("\n")
-				target.write(read.strip())
-				target.write("\n")
-			target.close()
-			init.close()
-			fpos.close()
-			os.system("perl " + perl_path + "fasta_to_fastq.pl " + f[:-3]+"fa >" + f[:-3]+"fq")
+	#for f in get_filepaths(sys.argv[1]):
+	#	if mimetypes.guess_type(f)[0] == 'text/plain':
+	f = open(sys.argv[1])
+	while True:
+		fname = f.readline().strip()
+		if fname == '':
+			break
+
+		#print(fname[:-2]+"txt")
+		init = open(fname[:-2]+"txt")
+		fpos = open(pos_path+fname[:-3])
+		print ("Opening the file: " + fname[:-2]+"txt")
+		target = open(fname[:-2]+"fa", 'w')
+		i = 0
+		while True:
+			i += 1
+			read = init.readline()
+			pos = fpos.readline()				
+			if read == '':
+				break
+			target.write(">" + str(i) + "##" + pos.strip())
+			target.write("\n")
+			target.write(read.strip())
+			target.write("\n")
+		target.close()
+		init.close()
+		fpos.close()
+		os.system("perl " + perl_path + "fasta_to_fastq.pl " + fname[:-2]+"fa >" + fname[:-2]+"fq")
+
+	os.system("../fq2fastq.sh")
