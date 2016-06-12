@@ -1,7 +1,7 @@
 import sys, os
 import mimetypes
 
-
+pos_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/positions/"
 
 def get_filepaths(directory):
     """
@@ -25,25 +25,26 @@ def get_filepaths(directory):
 
 if __name__ == '__main__':
 
-	#f = open(sys.argv[1])
-
+	
 	for f in get_filepaths(sys.argv[1]):
 		if mimetypes.guess_type(f)[0] == 'text/plain':
 			#print(f)
 			init = open(f)
+			fpos = open(f[:-4])
 			print ("Opening the file: " + f)
 			target = open(f[:-3]+"fa", 'w')
 			i = 0
 			while True:
 				i += 1
 				read = init.readline()
+				pos = fpos.readline()
 				if read == '':
 					break
-				target.write(">" + str(i))
+				target.write(">" + str(i) + "##" + pos)
 				target.write("\n")
 				target.write(read.strip())
 				target.write("\n")
 			target.close()
 			init.close()
+			fpos.close()
 			os.system("perl fasta_to_fastq.pl " + f[:-3]+"fa >" + f[:-3]+"fq")
-
