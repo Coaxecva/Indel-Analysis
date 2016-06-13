@@ -44,9 +44,12 @@ if __name__ == '__main__':
 					pass
 				else:
 					sl = line.split()
-					print(sl)
+					#print(f)
+					#print(sl)
 					#print(int(sl[0][sl[0].find("##")+2:])-int(flank_match[:-1])) #true pos
 					#print(sl[3]) #estimate
+					if (sl[3] == ''):
+						pass
 					if (abs(int(sl[0][sl[0].find("##")+2:])-int(flank_match[:-1])-int(sl[3])) < allowed_dis):
 						mapped += 1
 						#print("++")
@@ -54,7 +57,6 @@ if __name__ == '__main__':
 					if (cigar[:3]==flank_match):
 						agreement += 1
 			print(str(total/4)+"\t"+str(mapped)+"\t"+str(agreement))
-			exit()
-
+			
 	print ("###########################################################")
 	
