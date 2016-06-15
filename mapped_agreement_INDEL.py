@@ -2,7 +2,7 @@ import sys, os
 
 folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads/"
 folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads/alignment/"
-flank_match = "21M"
+flank_match = "22M"
 
 allowed_dis = 20
 
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	print ("###########################################################")
 
 	#Stat:
-	alist = ["Bowtie2.", "SHRiMP.", "Razers3.", "Cushaw2.", "Bwasw.", "Gassst.", "Smalt."]
+	alist = ["Bowtie2.", "SHRiMP.", "Razers3.", "Cushaw2.", "Bwasw.", "Bwamem.", "Bwa.", "Gassst.", "Smalt."]
 	for f in open(fq_list_fn):		
 		total = sum(1 for line in open(folder_fq_path + f.strip()))				
 		for aligner in alist:
@@ -49,14 +49,25 @@ if __name__ == '__main__':
 					#print(int(sl[0][sl[0].find("##")+2:])-int(flank_match[:-1])) #true pos
 					#print(sl[3]) #estimate
 					if (sl[3] == ''):
-						pass
+						continue
 					if (abs(int(sl[0][sl[0].find("##")+2:])-int(flank_match[:-1])-int(sl[3])) < allowed_dis):
 						mapped += 1
 						#print("++")
-					cigar = sl[5]					
-					if (cigar[:3]==flank_match):
-						agreement += 1
+						#cigar = sl[5]					
+						#print(cigar[:3], flank_match)
+						#if (cigar[:3]==flank_match):
+							#agreement += 1	
+					#print(sl[5])
+					if (sl[5] == '*'):
+						continue
+					#print(abs(int(sl[0][sl[0].find("##")+2:])-int(sl[3])))
+					#print(sl[5][:(sl[5].find('M'))])
+					if(sl[5].find('M') > 2):
+						continue
+					if (abs(int(sl[0][sl[0].find("##")+2:])-int(sl[3])) == int(sl[5][:(sl[5].find('M'))])-1):
+						agreement += 1	
+
 			print(str(total/4)+"\t"+str(mapped)+"\t"+str(agreement))
-			
+						
 	print ("###########################################################")
 	
