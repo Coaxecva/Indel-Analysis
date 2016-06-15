@@ -31,11 +31,16 @@ if __name__ == '__main__':
 
 	print ("###########################################################")
 
-	#Stat:
+	
+	#Stat:	
 	alist = ["Bowtie2.", "SHRiMP.", "Razers3.", "Cushaw2.", "Bwasw.", "Bwamem.", "Bwa.", "Gassst.", "Smalt."]
+	Indel_Pos = [set() for _ in alist]
+
 	for f in open(fq_list_fn):		
 		total = sum(1 for line in open(folder_fq_path + f.strip()))				
+		idx = -1
 		for aligner in alist:
+			idx += 1
 			#print(aligner)
 			agreement = 0
 			mapped = 0
@@ -66,8 +71,19 @@ if __name__ == '__main__':
 						continue
 					if (abs(int(sl[0][sl[0].find("##")+2:])-int(sl[3])) == int(sl[5][:(sl[5].find('M'))])-1):
 						agreement += 1	
+						#print(idx)
+						Indel_Pos[idx].add(sl[3])
 
-			print(str(total/4)+"\t"+str(mapped)+"\t"+str(agreement))
-						
+			#print(str(total/4)+"\t"+str(mapped)+"\t"+str(agreement))
+	
+	#Venn diagram
+	print(len(Indel_Pos[0]-Indel_Pos[1]-Indel_Pos[5])) # A-B-c
+	print(len(Indel_Pos[5]-Indel_Pos[0]-Indel_Pos[1])) # C-A-B
+	print(len(Indel_Pos[1]-Indel_Pos[0]-Indel_Pos[5])) # B-A-C
+	print(len(Indel_Pos[0]&Indel_Pos[5]-Indel_Pos[1])) # A&C-B
+	print(len(Indel_Pos[5]&Indel_Pos[1]-Indel_Pos[0])) # C&B-A
+	print(len(Indel_Pos[0]&Indel_Pos[1]-Indel_Pos[5])) # A&B-C
+	print(len(Indel_Pos[0]&Indel_Pos[1]&Indel_Pos[5])) # A&B&C
+
 	print ("###########################################################")
 	
