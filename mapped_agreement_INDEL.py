@@ -1,8 +1,8 @@
 import sys, os
 
-folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads/"
-folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads/alignment/"
-flank_match = "22M"
+folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/"
+folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/alignment/"
+flank_match = "51M"
 
 allowed_dis = 20
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
 	
 	#Venn diagram
 	print("-----------------")
-	print(len(Indel_Pos[0]-Indel_Pos[1]-Indel_Pos[5])) # A-B-c
+	print(len(Indel_Pos[0]-Indel_Pos[1]-Indel_Pos[5])) # A-B-C
 	print(len(Indel_Pos[5]-Indel_Pos[0]-Indel_Pos[1])) # C-A-B
 	print(len(Indel_Pos[1]-Indel_Pos[0]-Indel_Pos[5])) # B-A-C
 	print(len(Indel_Pos[0]&Indel_Pos[5]-Indel_Pos[1])) # A&C-B
