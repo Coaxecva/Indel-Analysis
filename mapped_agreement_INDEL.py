@@ -1,8 +1,8 @@
 import sys, os
 
-folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/"
-folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/alignment/"
-flank_match = "30M"
+folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads50/"
+folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads50/alignment/"
+flank_match = "51M"
 
 allowed_dis = 20
 
@@ -87,6 +87,7 @@ if __name__ == '__main__':
 	
 	#Venn diagram
 	print("-----------------")
+	
 	print(len(Indel_Pos[0]-Indel_Pos[1]-Indel_Pos[5])) # A-B-C
 	print(len(Indel_Pos[5]-Indel_Pos[0]-Indel_Pos[1])) # C-A-B
 	print(len(Indel_Pos[1]-Indel_Pos[0]-Indel_Pos[5])) # B-A-C
@@ -94,6 +95,26 @@ if __name__ == '__main__':
 	print(len(Indel_Pos[5]&Indel_Pos[1]-Indel_Pos[0])) # C&B-A
 	print(len(Indel_Pos[0]&Indel_Pos[1]-Indel_Pos[5])) # A&B-C
 	print(len(Indel_Pos[0]&Indel_Pos[1]&Indel_Pos[5])) # A&B&C
+
+	print(len(Indel_Pos[2]-Indel_Pos[3])) # D-E
+	print(len(Indel_Pos[2]&Indel_Pos[3])) # D&E
+	print(len(Indel_Pos[3]-Indel_Pos[2])) # E-D
+
+	print(len(Indel_Pos[7]-Indel_Pos[8])) # D-E
+	print(len(Indel_Pos[7]&Indel_Pos[8])) # D&E
+	print(len(Indel_Pos[8]-Indel_Pos[7])) # E-D	
+
+	t1 = Indel_Pos[0]&Indel_Pos[1]&Indel_Pos[5]
+	t2 = Indel_Pos[2]&Indel_Pos[3]
+	t3 = Indel_Pos[8]-Indel_Pos[7]
+
+	print(len(t1-t2-t3)) # A-B-C
+	print(len(t3-t1-t2)) # C-A-B
+	print(len(t2-t1-t3)) # B-A-C
+	print(len(t1&t3-t2)) # A&C-B
+	print(len(t3&t2-t1)) # C&B-A
+	print(len(t1&t2-t3)) # A&B-C
+	print(len(t1&t2&t3)) # A&B&C
 
 	print ("###########################################################")
 	
