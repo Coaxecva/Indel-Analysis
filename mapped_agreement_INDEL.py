@@ -2,7 +2,7 @@ import sys, os
 
 folder_fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/"
 folder_sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads29/alignment/"
-flank_match = "51M"
+flank_match = "30M"
 
 allowed_dis = 20
 
@@ -33,6 +33,15 @@ if __name__ == '__main__':
 
 	
 	#Stat:	
+	#alist = ["Bowtie2."]
+	#alist = ["SHRiMP."]
+	#alist = ["Razers3."]
+	#alist = ["Cushaw2."]
+	#alist = ["Bwasw."]
+	#alist = ["Bwamem."]
+	#alist = ["Bwa."]
+	#alist = ["Gassst."]
+	#alist = ["Smalt."]
 	alist = ["Bowtie2.", "SHRiMP.", "Razers3.", "Cushaw2.", "Bwasw.", "Bwamem.", "Bwa.", "Gassst.", "Smalt."]
 	Indel_Pos = [set() for _ in alist]
 
