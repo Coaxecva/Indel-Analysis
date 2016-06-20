@@ -3,7 +3,7 @@ import sys, os
 flank_match = "51M"
 allowed_dis = 20
 
-outs_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/outs50/"
+outs_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/outs50/out"
 fq_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads50/"
 sam_path = "/home/qmtran/Indel_Analysis/Data_reads22_29/reads50/alignment/"
 
@@ -28,11 +28,20 @@ if __name__ == '__main__':
 
 	for f in open(fq_list_fn):		
 		total = sum(1 for line in open(fq_path + f.strip()))				
-		idx = -1
-		for aligner in alist:
-			idx += 1
+		#print(f.strip())
+
+		c = 0
+		for outline in open(outs_path+f.strip()[:-3]+".txt"):
+			c+=1
+			if c%3 == 1 :
+				osl = outline.split()
+				#print(osl)
+				print(osl[3])
+
+		chr_agreed = 0
+		for aligner in alist:		
 			#print(aligner)
-			agreement = 0
+			agreed = 0
 			mapped = 0
 			for line in open(sam_path + f[:-3] + aligner + "sam"):
 				if line[0] == "@":
@@ -46,6 +55,17 @@ if __name__ == '__main__':
 					if (sl[3] == ''):
 						continue
 
-			print(str(total/4))
+					if (sl[5] == '*'):
+						continue
+
+					if(sl[5].find('M') > 2):
+						continue
+
+					if (abs(int(sl[0][sl[0].find("##")+2:])-int(sl[3])) == int(sl[5][:(sl[5].find('M'))])-1):
+						agreed += 1
+
+			chr_agreed += agreed
+			
+		print(str(total/4)+"\t"+str(1.0/chr_agreed))
 
 	print ("###########################################################")
