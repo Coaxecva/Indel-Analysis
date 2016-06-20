@@ -48,11 +48,12 @@ if __name__ == '__main__':
 
 		#chr_agreed = 0
 		total_mapped = 0
-		r_oa = 0
+		total_r_oa = 0
 		for aligner in alist:		
 			#print(aligner)
 			agreed = 0
 			mapped = 0
+			r_oa = 0
 			for line in open(sam_path + f[:-3] + aligner + "sam"):
 				if line[0] == "@":
 					pass
@@ -70,6 +71,7 @@ if __name__ == '__main__':
 						if sl[9] in m:
 							#print(m[sl[9]])
 							r_oa += 1.0/m[sl[9]]
+							total_r_oa += r_oa
 
 
 					if (sl[5] == '*'):
@@ -83,7 +85,8 @@ if __name__ == '__main__':
 
 			total_mapped += mapped
 			#chr_agreed += agreed
-			
-		print(str(total/4)+"\t"+str(total_mapped)+"\t"+str(r_oa/total_mapped))
+			print(str(mapped)+"\t"+str(r_oa))
+
+		#print(str(total/4)+"\t"+str(total_mapped)+"\t"+str(r_oa/total_mapped))
 
 	print ("###########################################################")
