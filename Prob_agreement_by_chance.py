@@ -31,14 +31,23 @@ if __name__ == '__main__':
 		#print(f.strip())
 
 		c = 0
+		t = -1
+		m = {}
 		for outline in open(outs_path+f.strip()[:-3]+".txt"):
 			c+=1
 			if c%3 == 1 :
 				osl = outline.split()
 				#print(osl)
 				print(osl[3])
+				t = int(osl[3])
+			if c%3 == 0 :
+				#print(outline)
+				m[outline.strip()] = t
 
-		chr_agreed = 0
+		print(m)
+
+		#chr_agreed = 0
+		chr_mapped = 0
 		for aligner in alist:		
 			#print(aligner)
 			agreed = 0
@@ -55,6 +64,9 @@ if __name__ == '__main__':
 					if (sl[3] == ''):
 						continue
 
+					if (abs(int(sl[0][sl[0].find("##")+2:])-int(flank_match[:-1])-int(sl[3])) < allowed_dis):
+						mapped += 1
+
 					if (sl[5] == '*'):
 						continue
 
@@ -64,8 +76,9 @@ if __name__ == '__main__':
 					if (abs(int(sl[0][sl[0].find("##")+2:])-int(sl[3])) == int(sl[5][:(sl[5].find('M'))])-1):
 						agreed += 1
 
-			chr_agreed += agreed
+			chr_mapped += mapped
+			#chr_agreed += agreed
 			
-		print(str(total/4)+"\t"+str(1.0/chr_agreed))
+		print(str(total/4)+"\t"+str(1.0/chr_mapped))
 
 	print ("###########################################################")
